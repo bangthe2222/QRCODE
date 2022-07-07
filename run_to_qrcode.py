@@ -50,7 +50,7 @@ if __name__ == "__main__":
             old_cof = cof
         image = qrcode_detect.drawImage(image, indices, boxes, class_ids, confidences, classes)
 
-        if len(indices):
+        if len(indices) > 0:
             runToQrcode(x+w/2, y+h/2, width/2, height/2)
             distance = depth_frame[x+w/2, y+h/2]
             if int(distance) < 50:
