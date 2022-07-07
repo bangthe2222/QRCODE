@@ -27,7 +27,7 @@ def runToQrcode(x_center ,y_center, x_0, y_0, ACC = 0.9):
 if __name__ == "__main__":
     # cap = cv2.VideoCapture(0)
     dc = DepthCamera()
-    net, classes = qrcode_detect.loadWeight(weights = "./qr_code_yolov4_tiny.weights",cfg ="./yolo-config.cfg",class_name = "./obj.names")
+    net, classes = qrcode_detect.loadWeight(weights = "./yolov4-tiny-custom_best.weights",cfg ="./yolov4-tiny.cfg",class_name = "./obj.names")
     checkRunToQR = True
     
     while checkRunToQR:
@@ -52,10 +52,10 @@ if __name__ == "__main__":
 
         if indices:
             runToQrcode(x+w/2, y+h/2, width/2, height/2)
-            distance = depth_frame[x+w/2, y+h/2]
-            if int(distance) < 50:
-                checkRunToQR = False        
-        cv2.putText(image, "z: " + str(distance),"mm", (20,80 ), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,0,0), 1)
+            # distance = depth_frame[x+w/2, y+h/2]
+            # if int(distance) < 50:
+                # checkRunToQR = False        
+        cv2.putText(image, "z: " + str(distance)+" mm", (20,80 ), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,0,0), 1)
         cv2.imshow("image", image)
         if cv2.waitKey(1) & 0xff == ord('q'):
             break
