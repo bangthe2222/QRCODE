@@ -1,9 +1,9 @@
 # Import libraries
-from importlib.resources import path
-from turtle import width
 import cv2
 import numpy as np
 import time
+import pyrealsense2
+from realsense_depth import *
 
 def get_output_layers(net):
     layer_names = net.getLayerNames()
@@ -113,14 +113,17 @@ def detect(image, net):
     return image, indices, boxes, class_ids, confidences
 
 if __name__ == "__main__":
-    cap = cv2.VideoCapture(0)
+    # cap = cv2.VideoCapture(0)
+    dc = DepthCamera()
     # net, classes = loadWeight(weights = "./qr_code_yolov4.weights",cfg ="./yolov4.cfg",class_name = "./obj.names")
     net, classes = loadWeight(weights = "./yolov4-tiny-custom_best.weights",cfg ="./yolov4-tiny.cfg",class_name = "./obj.names")
-    while cap.isOpened():
-        ret, frame = cap.read()
+    ret = True
+    while ret:
+        # ret, frame = cap.read()
+        ret, depth_frame, color_frame = dc.get_frame()
         if ret == True:
             start = time.time()
-            image, indices, boxes, class_ids, confidences = detect(frame, net)
+            image, indices, boxes, class_ids, confidences = detect(color_frame, net)
             image = drawImage(image, indices, boxes, class_ids, confidences, classes)
 
             cv2.imshow("image", image)
@@ -130,5 +133,5 @@ if __name__ == "__main__":
             print("time: " , end - start)
         else:
             break
-    cap.release()
+    # cap.release()
     cv2.destroyAllWindows()
