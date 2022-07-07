@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
         if len(indices) > 0:
             runToQrcode(x+w/2, y+h/2, width/2, height/2)
-            distance = depth_frame[x+w/2, y+h/2]
+            distance = depth_frame[int(x+w/2), int(y+h/2)]
             if int(distance) < 50:
                 checkRunToQR = False        
         cv2.putText(image, "z: " + str(distance)+" mm", (20,80 ), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,0,0), 1)
