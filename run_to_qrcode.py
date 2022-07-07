@@ -50,11 +50,11 @@ if __name__ == "__main__":
             old_cof = cof
         image = qrcode_detect.drawImage(image, indices, boxes, class_ids, confidences, classes)
 
-        if indices:
+        if len(indices):
             runToQrcode(x+w/2, y+h/2, width/2, height/2)
-            # distance = depth_frame[x+w/2, y+h/2]
-            # if int(distance) < 50:
-                # checkRunToQR = False        
+            distance = depth_frame[x+w/2, y+h/2]
+            if int(distance) < 50:
+                checkRunToQR = False        
         cv2.putText(image, "z: " + str(distance)+" mm", (20,80 ), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255,0,0), 1)
         cv2.imshow("image", image)
         if cv2.waitKey(1) & 0xff == ord('q'):
